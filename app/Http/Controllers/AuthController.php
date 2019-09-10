@@ -51,12 +51,12 @@ class AuthController extends Controller
 
         echo 'poo';
 
-        return (new UserResource($request->user()))
-            ->additional([
-                'meta' => [
-                    'token' => $token
-                ]
-            ]);
+        // return (new UserResource($request->user()))
+        //     ->additional([
+        //         'meta' => [
+        //             'token' => $token
+        //         ]
+        //     ]);
     }
 
     public function logout()
