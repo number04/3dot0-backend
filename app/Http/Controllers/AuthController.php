@@ -47,7 +47,7 @@ class AuthController extends Controller
                     'message' => 'The given data was invalid.'
                     ]
             ], 422);
-        }
+        
 
         return
 
