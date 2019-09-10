@@ -36,22 +36,28 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        print_r('poo');
+        $this->validate($request, [
+            'email' => 'required',
+            'password' => 'required'
+        ]);
 
-        // $this->validate($request, [
-        //     'email' => 'required',
-        //     'password' => 'required'
-        // ]);
-        //
-        // if (!$token = auth()->attempt($request->only('email', 'password'))) {
-        //     return response()->json([
-        //         'errors' => [
-        //             'message' => 'The given data was invalid.'
-        //             ]
-        //     ], 422);
-        // }
+        if (!$token = auth()->attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'errors' => [
+                    'message' => 'The given data was invalid.'
+                    ]
+            ], 422);
+        }
 
-        return;
+        return $request->user();
+
+
+        // return (new UserResource($request->user()))
+        //     ->additional([
+        //         'meta' => [
+        //             'token' => $token
+        //         ]
+        //     ]);
     }
 
     public function logout()
