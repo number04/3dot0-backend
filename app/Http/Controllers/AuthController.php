@@ -49,6 +49,8 @@ class AuthController extends Controller
             ], 422);
         }
 
+        echo 'poo';
+
         return (new UserResource($request->user()))
             ->additional([
                 'meta' => [
