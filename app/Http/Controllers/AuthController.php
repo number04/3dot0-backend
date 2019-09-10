@@ -51,12 +51,7 @@ class AuthController extends Controller
         //     ], 422);
         // }
 
-        return (new UserResource($request->user()))
-            ->additional([
-                'meta' => [
-                    'token' => $token
-                ]
-            ]);
+        return;
     }
 
     public function logout()
