@@ -51,12 +51,12 @@ class AuthController extends Controller
         //     ], 422);
         // }
 
-        // return (new UserResource($request->user()))
-        //     ->additional([
-        //         'meta' => [
-        //             'token' => $token
-        //         ]
-        //     ]);
+        return (new UserResource($request->user()))
+            ->additional([
+                'meta' => [
+                    'token' => $token
+                ]
+            ]);
     }
 
     public function logout()
@@ -64,8 +64,8 @@ class AuthController extends Controller
         auth()->logout();
     }
 
-    // public function me(Request $request)
-    // {
-    //     return new UserResource($request->user());
-    // }
+    public function me(Request $request)
+    {
+        return new UserResource($request->user());
+    }
 }
