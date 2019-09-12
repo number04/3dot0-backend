@@ -17,12 +17,6 @@ class CommandQueries
 {
     public function lineup()
     {
-        // time(
-        //     CONVERT_TZ(
-        //         NOW(), @@session.time_zone, '+1:00'
-        //     )
-        // )
-
         Lineup::join('player', 'lineup.player_id', '=', 'player.id')
             ->join('schedule', function ($join) {
                 $join->on('lineup.date_id', '=', 'schedule.date_id')->on('player.nhl', '=', 'schedule.team');
@@ -33,7 +27,11 @@ class CommandQueries
             ->update([
                 'lineup.active' => DB::raw(
                     "CASE WHEN schedule.time < (
-                        SELECT NOW()
+                        SELECT time(
+                            CONVERT_TZ(
+                                NOW(), @@session.time_zone, '+1:00'
+                            )
+                        )
                     ) THEN 0 ELSE 1 END"
                 )
             ]);
