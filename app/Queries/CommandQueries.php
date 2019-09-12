@@ -29,7 +29,7 @@ class CommandQueries
                     "CASE WHEN schedule.time < (
                         SELECT time(
                             CONVERT_TZ(
-                                NOW(), @@session.time_zone, '-7:00'
+                                NOW(), @@session.time_zone, '+1:00'
                             )
                         )
                     ) THEN 0 ELSE 1 END"
