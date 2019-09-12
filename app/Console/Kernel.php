@@ -27,10 +27,10 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('theleague:date')->dailyAt('08:00');
-        $schedule->command('theleague:claim')->dailyAt('08:00');
-
-        $schedule->command('theleague:lineup')->everyMinute();
+        $schedule->command('theleague:date')->dailyAt('03:19');
+        // $schedule->command('theleague:claim')->dailyAt('08:00');
+        //
+        // $schedule->command('theleague:lineup')->everyMinute();
     }
 
     /**
