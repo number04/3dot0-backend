@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('theleague:date')->dailyAt('22:10');
+        $schedule->command('theleague:date')->dailyAt('09:24');
     }
 
     /**
