@@ -24,9 +24,15 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+
+     protected function scheduleTimezone()
+     {
+         return 'America/Vancouver';
+     }
+
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('theleague:date')->dailyAt('00:40');
+        $schedule->command('theleague:date')->dailyAt('00:50');
     }
 
     /**
