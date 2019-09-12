@@ -21,7 +21,7 @@ class CommandQueries
             ->join('schedule', function ($join) {
                 $join->on('lineup.date_id', '=', 'schedule.date_id')->on('player.nhl', '=', 'schedule.team');
             })
-            ->where('lineup.date_id', '<', function ($query) {
+            ->where('lineup.date_id', function ($query) {
                 $query->select('value')->from('config')->where('key', 'date');
             })
             ->update([
