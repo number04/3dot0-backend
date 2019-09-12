@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('theleague:date')->everyMinute();
+        $schedule->command('theleague:date')->dailyAt('20:52');
     }
 
     /**
