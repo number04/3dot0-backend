@@ -25,14 +25,12 @@ class Kernel extends ConsoleKernel
      * @return void
      */
 
-    // protected function scheduleTimezone()
-    // {
-    //     return 'America/Vancouver';
-    // }
-
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('theleague:date')->dailyAt('09:24');
+        $schedule->command('theleague:date')->dailyAt('08:00');
+        $schedule->command('theleague:claim')->dailyAt('08:00');
+
+        $schedule->command('theleague:lineup')->everyMinute();
     }
 
     /**
