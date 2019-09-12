@@ -23,9 +23,9 @@ class CommandQueries
         //     )
         // )
 
-        Lineup::join('player', 'lineup.player_id', '=', 'player.id')
+        Lineup::join('_player', 'lineup.player_id', '=', '_player.id')
             ->join('schedule', function ($join) {
-                $join->on('lineup.date_id', '=', 'schedule.date_id')->on('player.nhl', '=', 'schedule.team');
+                $join->on('lineup.date_id', '=', 'schedule.date_id')->on('_player.nhl', '=', 'schedule.team');
             })
             ->where('lineup.date_id', function ($query) {
                 $query->select('value')->from('config')->where('key', 'date');
