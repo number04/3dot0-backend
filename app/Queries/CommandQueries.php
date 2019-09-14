@@ -15,16 +15,29 @@ use DB;
 
 class CommandQueries
 {
+    public function timeConversion()
+    {
+        return Config::where('key', 'conversion')->pluck('value')->first();
+    }
+
+    public function pst()
+    {
+        Config::where('key', 'conversion')
+            ->->update([
+                'value' => '-8:00'
+            ]);
+    }
+
+    public function pdt()
+    {
+        Config::where('key', 'conversion')
+            ->->update([
+                'value' => '-7:00'
+            ]);
+    }
+
     public function lineup()
     {
-        // time(
-        //     CONVERT_TZ(
-        //         NOW(), @@session.time_zone, '+1:00'
-        //     )
-        // )
-
-        // Config::where('key', 'date')->increment('value');
-
         Lineup::join('_player', 'lineup.player_id', '=', '_player.id')
             ->join('schedule', function ($join) {
                 $join->on('lineup.date_id', '=', 'schedule.date_id')->on('_player.nhl', '=', 'schedule.team');
@@ -37,7 +50,7 @@ class CommandQueries
                     "CASE WHEN schedule.time < (
                         SELECT time(
                             CONVERT_TZ(
-                                NOW(), @@session.time_zone, '-8:00'
+                                NOW(), @@session.time_zone, '".$this->timeConversion()."'
                             )
                         )
                     ) THEN 0 ELSE 1 END"
