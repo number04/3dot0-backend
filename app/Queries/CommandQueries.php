@@ -23,7 +23,7 @@ class CommandQueries
         //     )
         // )
 
-        Config::where('key', 'date')->increment('value');
+        // Config::where('key', 'date')->increment('value');
 
         // Lineup::join('_player', 'lineup.player_id', '=', '_player.id')
         //     ->join('schedule', function ($join) {
