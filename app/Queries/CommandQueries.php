@@ -23,7 +23,7 @@ class CommandQueries
     public function pst()
     {
         Config::where('key', 'conversion')
-            ->->update([
+            ->update([
                 'value' => '-8:00'
             ]);
     }
@@ -31,7 +31,7 @@ class CommandQueries
     public function pdt()
     {
         Config::where('key', 'conversion')
-            ->->update([
+            ->update([
                 'value' => '-7:00'
             ]);
     }
