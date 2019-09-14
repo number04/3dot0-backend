@@ -23,20 +23,22 @@ class CommandQueries
         //     )
         // )
 
-        Lineup::join('_player', 'lineup.player_id', '=', '_player.id')
-            ->join('schedule', function ($join) {
-                $join->on('lineup.date_id', '=', 'schedule.date_id')->on('_player.nhl', '=', 'schedule.team');
-            })
-            ->where('lineup.date_id', function ($query) {
-                $query->select('value')->from('config')->where('key', 'date');
-            })
-            ->update([
-                'lineup.active' => DB::raw(
-                    "CASE WHEN schedule.time < (
-                        SELECT NOW()
-                    ) THEN 0 ELSE 1 END"
-                )
-            ]);
+        return print_r('poo');
+
+        // Lineup::join('_player', 'lineup.player_id', '=', '_player.id')
+        //     ->join('schedule', function ($join) {
+        //         $join->on('lineup.date_id', '=', 'schedule.date_id')->on('_player.nhl', '=', 'schedule.team');
+        //     })
+        //     ->where('lineup.date_id', function ($query) {
+        //         $query->select('value')->from('config')->where('key', 'date');
+        //     })
+        //     ->update([
+        //         'lineup.active' => DB::raw(
+        //             "CASE WHEN schedule.time < (
+        //                 SELECT NOW()
+        //             ) THEN 0 ELSE 1 END"
+        //         )
+        //     ]);
     }
 
     public function date()
