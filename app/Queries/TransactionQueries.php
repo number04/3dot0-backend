@@ -87,7 +87,7 @@ class TransactionQueries
     {
         Waiver::insert([
             'player_id' => $player,
-            'created_at' => date("Y-m-d H:i:s", strtotime($this->timeConversion()))
+            'created_at' => gmdate("Y-m-d H:i:s", strtotime($this->timeConversion()))
         ]);
     }
 
