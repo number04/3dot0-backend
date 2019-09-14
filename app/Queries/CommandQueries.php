@@ -23,7 +23,7 @@ class CommandQueries
         //     )
         // )
 
-        return print_r('poo');
+        Config::where('key', 'date')->increment('value');
 
         // Lineup::join('_player', 'lineup.player_id', '=', '_player.id')
         //     ->join('schedule', function ($join) {
@@ -38,7 +38,7 @@ class CommandQueries
         //                 SELECT NOW()
         //             ) THEN 0 ELSE 1 END"
         //         )
-        //     ]);
+            ]);
     }
 
     public function date()
