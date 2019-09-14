@@ -37,11 +37,11 @@ class Kernel extends ConsoleKernel
         $schedule->command('theleague:adds')->mondays()->at('08:00');
         $schedule->command('theleague:lineup')->everyMinute();
 
-        $schedule->command('theleague:date')->dailyAt('11:44')->after(function () use ($schedule) {
+        $schedule->command('theleague:date')->dailyAt('11:50')->after(function () use (Schedule $schedule) {
             $schedule->command('theleague:matchup');
          });
 
-        $schedule->command('theleague:claim')->dailyAt('11:44')->after(function () use ($schedule) {
+        $schedule->command('theleague:claim')->dailyAt('11:50')->after(function () use (Schedule $schedule) {
             $schedule->command('theleague:waiver');
          });
     }
