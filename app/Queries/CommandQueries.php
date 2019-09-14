@@ -38,7 +38,7 @@ class CommandQueries
         //                 SELECT NOW()
         //             ) THEN 0 ELSE 1 END"
         //         )
-            ]);
+            // ]);
     }
 
     public function date()
