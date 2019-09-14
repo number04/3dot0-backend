@@ -9,6 +9,7 @@ use App\Models\Transaction;
 use App\Models\Waiver;
 use App\Models\Franchise;
 use App\Models\Claim;
+use App\Models\Config;
 
 /**
  *
@@ -16,6 +17,11 @@ use App\Models\Claim;
 
 class TransactionQueries
 {
+    public function timeConversion()
+    {
+        return Config::where('key', 'conversion')->pluck('value')->first();
+    }
+
     public function increments($franchise, $column)
     {
         Franchise::where('id', $franchise)->increment($column);
@@ -79,7 +85,10 @@ class TransactionQueries
 
     public function waiver($player)
     {
-        Waiver::insert(['player_id' => $player]);
+        Waiver::insert([
+            'player_id' => $player,
+            'created_at' => date("Y-m-d H:i:s", strtotime($this->timeConversion()))
+        ]);
     }
 
     public function countWaiver($player)

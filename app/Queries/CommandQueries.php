@@ -4,6 +4,9 @@ namespace App\Queries;
 
 use App\Models\Lineup;
 use App\Models\Config;
+use App\Models\Franchise;
+use App\Models\Matchup;
+use App\Models\Waiver;
 
 use DB;
 
@@ -22,18 +25,48 @@ class CommandQueries
 
     public function pst()
     {
-        Config::where('key', 'conversion')
-            ->update([
-                'value' => '-8:00'
-            ]);
+        Config::where('key', 'conversion')->update(['value' => '-8:00']);
     }
 
     public function pdt()
     {
-        Config::where('key', 'conversion')
+        Config::where('key', 'conversion')->update(['value' => '-7:00']);
+    }
+
+    public function date()
+    {
+        Config::where('key', 'date')->increment('value');
+    }
+
+    public function adds()
+    {
+        Franchise::query()->update(['weekly_adds' => 0]);
+    }
+
+    public function getMatchup()
+    {
+        return array_map('intval', Matchup::select('start_date')->get()->pluck('start_date')->toArray());
+    }
+
+    public function getDate()
+    {
+        return Config::where('key', 'date')->pluck('value')->first();
+    }
+
+    public function waiver()
+    {
+        Waiver::whereRaw('DATE_ADD(created_at, INTERVAL 2 DAY) < NOW()')
             ->update([
-                'value' => '-7:00'
+                'active' => 0
             ]);
+    }
+
+    public function matchup()
+    {
+        if (in_array($this->getDate(), $this->getMatchup())) {
+
+            Config::where('key', 'matchup')->increment('value');
+        }
     }
 
     public function lineup()
@@ -50,17 +83,12 @@ class CommandQueries
                     "CASE WHEN schedule.time < (
                         SELECT time(
                             CONVERT_TZ(
-                                NOW(), @@session.time_zone, '".$this->timeConversion()."'
+                                NOW(), @@session.time_zone, '".$this->timeConversion().":00'
                             )
                         )
                     ) THEN 0 ELSE 1 END"
                 )
             ]);
-    }
-
-    public function date()
-    {
-        Config::where('key', 'date')->increment('value');
     }
 
     public function claim($claim)

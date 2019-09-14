@@ -32,7 +32,7 @@ class ClaimQueries
 
     public function getClaim()
     {
-        return DB::table('_claim')->select('*')->whereRaw('DATE_ADD(created_at, INTERVAL 2 DAY) > NOW()')->get();
+        return DB::table('_claim')->select('*')->whereRaw('DATE_ADD(created_at, INTERVAL 2 DAY) < NOW()')->get();
     }
 
     public function getFail($waiver)
