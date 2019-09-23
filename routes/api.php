@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth:api', ], function () {
     Route::get('me', 'AuthController@me');
     Route::get('config', 'endpoints\ConfigController@index');
     Route::get('claim', 'endpoints\ClaimController@claim');
+    Route::get('transaction', 'endpoints\TransactionController@transaction');
     Route::get('rank:{matchup}', 'endpoints\RankController@rank');
     Route::get('standing:{matchup}', 'endpoints\StandingController@standing');
 

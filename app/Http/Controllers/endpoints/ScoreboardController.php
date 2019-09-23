@@ -5,10 +5,7 @@ namespace App\Http\Controllers\endpoints;
 use App\Http\Controllers\Controller;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Models\Franchise;
-use App\Http\Resources\scoreboard\TotalResource;
 use App\Http\Resources\scoreboard\ScoreboardResource;
-
-use DB;
 
 class ScoreboardController extends Controller
 {
@@ -37,7 +34,7 @@ class ScoreboardController extends Controller
 
                     'scoreboard' => function ($query) use ($matchup) {
                         $query->matchup($matchup)->stats()->groupBy('id','franchise_id');
-                    },
+                    }
                 ])
                 ->allowedFilters([
                     'id'

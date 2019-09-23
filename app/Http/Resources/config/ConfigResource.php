@@ -6,6 +6,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\Matchup;
 use App\Models\Date;
 use App\Models\Franchise;
+use App\Models\Standing;
+
+use DB;
 
 class ConfigResource extends JsonResource
 {
@@ -21,6 +24,11 @@ class ConfigResource extends JsonResource
             'franchise' => [
                 'total' => $this->value('franchise_total'),
                 'detail' =>  FranchiseDetailResource::collection(Franchise::all())
+            ],
+
+            'awards' => [
+                'king' => $this->king(),
+                'turkey' => $this->turkey(),
             ],
 
             'date' => [
@@ -50,6 +58,16 @@ class ConfigResource extends JsonResource
     private function date($date)
     {
         return Date::find(Matchup::find($this->value('matchup'))->$date)->date;
+    }
+
+    private function king()
+    {
+        return DB::table('_king')->get();
+    }
+
+    private function turkey()
+    {
+        return DB::table('_turkey')->get();
     }
 
 }

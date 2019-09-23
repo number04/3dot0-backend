@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\standing;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,11 +15,8 @@ class StandingResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'franchiseId' => $this->franchise_id,
-            'skater' => $this->skater,
-            'goalie' => $this->goalie,
-            'team' => $this->team,
-            'total' => $this->total
+            'franchiseId' => $this->id,
+            'standing' => MatchupResource::collection($this->standing)
         ];
     }
 }

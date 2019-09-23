@@ -67,7 +67,7 @@ class MatchupResource extends JsonResource
             'points_skater' => $this->points_skater,
             'hits' => $this->hits,
             'shots' => $this->shots,
-            'blocked_shots' => $this->blocked_shots,    
+            'blocked_shots' => $this->blocked_shots,
             'faceoff_wins' => $this->faceoff_wins
         ];
     }

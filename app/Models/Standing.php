@@ -14,4 +14,17 @@ class Standing extends Model
     {
         return $this->belongsTo(Franchise::class);
     }
+
+    public function scopeMatchup($query, $matchup)
+    {
+        return $query->where('matchup_id', '<=', $matchup);
+    }
+
+    // public function scopeTotals($query)
+    // {
+    //     $query->addSelect(
+    //         '*',
+    //         DB::raw('SUM(skater) AS total_skater')
+    //     );
+    // }
 }

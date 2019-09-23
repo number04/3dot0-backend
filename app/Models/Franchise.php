@@ -26,6 +26,11 @@ class Franchise extends Model
         return $this->hasMany(Scoreboard::class);
     }
 
+    public function standing()
+    {
+        return $this->hasMany(Standing::class);
+    }
+
     public function lineup()
     {
         return $this->hasMany(Lineup::class, 'franchise_id', 'id');

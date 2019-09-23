@@ -31,6 +31,11 @@ class Player extends Model
         return $this->hasOne(Lineup::class);
     }
 
+    public function transaction()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
     public function waiver()
     {
         return $this->hasMany(Waiver::class);
