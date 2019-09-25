@@ -19,6 +19,10 @@ use DB;
 
 class CommandQueries
 {
+    public function increments($franchise, $column)
+    {
+        Franchise::where('id', $franchise)->increment($column);
+
     public function timeConversion()
     {
         return Config::where('key', 'conversion')->pluck('value')->first();
@@ -129,6 +133,7 @@ class CommandQueries
             }
 
             $claim->add($request->player_id, $request->franchise_id);
+            $this->increments($request->franchise_id, 'sign');
             $claim->setLineup($request->player_id, $claim->getDate(), $request->franchise_id, 'b');
             $claim->setStatus('_claim', 'id', $request->id, 'success', 1);
             $claim->setStatus('claim', 'waiver_id', $request->waiver_id, 'process', 1);
