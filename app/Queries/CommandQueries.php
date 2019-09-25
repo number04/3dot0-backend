@@ -44,7 +44,7 @@ class CommandQueries
         Franchise::query()->update(['weekly_adds' => 0]);
     }
 
-    public function getMatchup()
+    public function getStartDate()
     {
         return array_map('intval', Matchup::select('start_date')->get()->pluck('start_date')->toArray());
     }
@@ -52,6 +52,11 @@ class CommandQueries
     public function getDate()
     {
         return (int) Config::where('key', 'date')->pluck('value')->first();
+    }
+
+    public function getMatchup()
+    {
+        return (int) Config::where('key', 'matchup')->pluck('value')->first();
     }
 
     public function waiver()
@@ -64,7 +69,7 @@ class CommandQueries
 
     public function matchup()
     {
-        if (in_array($this->getDate(), $this->getMatchup())) {
+        if ($this->getDate() != 1 && in_array($this->getDate(), $this->getStartDate())) {
 
             Config::where('key', 'matchup')->increment('value');
         }
@@ -130,7 +135,7 @@ class CommandQueries
             $claim->setStatus('waiver', 'id', $request->waiver_id, 'active', 0);
             $claim->waiverOrder($request->waiver_order, $request->franchise_id, $claim->countFranchise());
 
-            if ($claim->getFail($request->waiver_id) && $request->matchup_id === $claim->getMatchup()) {
+            if ($claim->getFail($request->waiver_id) && $request->matchup_id === $claim->getStartDate()) {
 
                 $claim->decrementWeeklyAdds($request->waiver_id);
             }
@@ -150,16 +155,21 @@ class CommandQueries
             if ($val['injury'] != 'Suspension' && $val['injury'] != 'Contract Dispute') {
                 PlayerBase::where('rotowire_id', $val['ID'])
                     ->update([
-                        'injury_status' => 1,
+                        'injury_status' => 1
                     ]);
             }
 
             if ($val['injury'] === 'Suspension' || $val['injury'] === 'Contract Dispute') {
                 PlayerBase::where('rotowire_id', $val['ID'])
                     ->update([
-                        'injury_status' => 2,
+                        'injury_status' => 2
                     ]);
             }
         };
+    }
+
+    public function standing()
+    {
+        DB::statement('call standing('.$this->getMatchup().'-1)');
     }
 }

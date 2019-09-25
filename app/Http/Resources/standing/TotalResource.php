@@ -19,7 +19,7 @@ class TotalResource extends JsonResource
             'skater' => (int) $this->skater,
             'goalie' => (int) $this->goalie,
             'team' => (int) $this->team,
-            'total' => (int) $this->total
+            'score' => (int) $this->score
         ];
     }
 }

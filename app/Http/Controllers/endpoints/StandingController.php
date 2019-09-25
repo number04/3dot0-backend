@@ -18,19 +18,7 @@ class StandingController extends Controller
         return StandingResource::collection(
                 $this->query($matchup)->get()
             )->additional([
-                'totals' => [
-                    TotalResource::collection(
-                        Standing::where('matchup_id', '<=', $matchup)
-                            ->groupBy('franchise_id')
-                            ->selectRaw(
-                                'franchise_id,
-                                SUM(skater) as skater,
-                                SUM(goalie) as goalie,
-                                SUM(team) as team,
-                                SUM(skater) + SUM(goalie) + SUM(team) as total'
-                            )
-                            ->get())
-                ]
+                'total' => [TotalResource::collection(DB::table('_standing')->get())]
             ]);
     }
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Standing extends Model
 {
-    protected $table = '_standing';
+    protected $table = 'standing';
 
     public $timestamps = false;
 
@@ -19,12 +19,4 @@ class Standing extends Model
     {
         return $query->where('matchup_id', '<=', $matchup);
     }
-
-    // public function scopeTotals($query)
-    // {
-    //     $query->addSelect(
-    //         '*',
-    //         DB::raw('SUM(skater) AS total_skater')
-    //     );
-    // }
 }
