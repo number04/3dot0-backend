@@ -37,7 +37,7 @@ class DatabaseQueries
             PlayerBase::where('first_name', $val['playerFirstName'])
                 ->where('last_name', $val['playerLastName'])
                 ->update([
-                    'id_nhl' => $val['playerId'],
+                    'nhl_id' => $val['playerId'],
                     'birth_date' => $val['playerBirthDate']
                 ]);
         };
@@ -53,7 +53,7 @@ class DatabaseQueries
             PlayerBase::where('first_name', $val['playerFirstName'])
                 ->where('last_name', $val['playerLastName'])
                 ->update([
-                    'id_nhl' => $val['playerId'],
+                    'nhl_id' => $val['playerId'],
                     'birth_date' => $val['playerBirthDate']
                 ]);
         };
@@ -69,7 +69,7 @@ class DatabaseQueries
             PlayerBase::where('nhl', $val['teamAbbrev'])
                 ->where('position', 't')
                 ->update([
-                    'id_nhl' => $val['teamId']
+                    'nhl_id' => $val['teamId']
                 ]);
         };
     }
@@ -85,7 +85,7 @@ class DatabaseQueries
             PlayerBase::where('first_name', $val['firstname'])
                 ->where('last_name', $val['lastname'])
                 ->update([
-                    'id_rotowire' => $val['id'],
+                    'rotowire_id' => $val['id'],
                 ]);
         };
     }

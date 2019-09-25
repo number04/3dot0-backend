@@ -41,8 +41,7 @@ class StatsQueries
 
         foreach($data as $val) {
 
-            PlayerBase::where('nhl', $val['teamAbbrev'])
-                ->where('position', 'T')
+            PlayerBase::where('nhl_id', $val['teamId'])
                 ->update([
                     'games_played' => $val['gamesPlayed'],
                     'wins' => $val['wins'],
@@ -60,8 +59,7 @@ class StatsQueries
 
         foreach($data as $val) {
 
-            PlayerBase::where('last_name', $val['playerLastName'])
-                ->where('birth_date', $val['playerBirthDate'])
+            PlayerBase::where('nhl_id', $val['playerId'])
                 ->update([
                     // 'nhl' => $val['playerTeamsPlayedFor'],
                     'games_played' => $val['gamesPlayed'],
@@ -77,8 +75,7 @@ class StatsQueries
 
         foreach($data as $val) {
 
-            PlayerBase::where('last_name', $val['playerLastName'])
-                ->where('birth_date', $val['playerBirthDate'])
+            PlayerBase::where('nhl_id', $val['playerId'])
                 ->update([
                     'faceoff_wins' => $val['faceoffsWon'],
                     'hits' => $val['hits'],
@@ -93,8 +90,7 @@ class StatsQueries
 
         foreach($data as $val) {
 
-            PlayerBase::where('last_name', $val['playerLastName'])
-                ->where('birth_date', $val['playerBirthDate'])
+            PlayerBase::where('nhl_id', $val['playerId'])
                 ->update([
                     'games_played' => $val['gamesPlayed'],
                     'wins' => $val['wins'],
@@ -118,8 +114,7 @@ class StatsQueries
         foreach($data as $val) {
 
             PlayerBase::join('stats', 'player.id', '=', 'stats.player_id')
-                ->where('player.nhl', $val['teamAbbrev'])
-                ->where('position', 'T')
+                ->where('nhl_id', $val['teamId'])
                 ->where('stats.date_id', $this->getDate())
                 ->update([
                     'stats.games_played' => $val['gamesPlayed'],
@@ -140,8 +135,7 @@ class StatsQueries
         foreach($data as $val) {
 
             PlayerBase::join('stats', 'player.id', '=', 'stats.player_id')
-                ->where('player.last_name', $val['playerLastName'])
-                ->where('player.birth_date', $val['playerBirthDate'])
+                ->where('nhl_id', $val['playerId'])
                 ->where('stats.date_id', $this->getDate())
                 ->update([
                     'stats.games_played' => $val['gamesPlayed'],
@@ -159,8 +153,7 @@ class StatsQueries
         foreach($data as $val) {
 
             PlayerBase::join('stats', 'player.id', '=', 'stats.player_id')
-                ->where('player.last_name', $val['playerLastName'])
-                ->where('player.birth_date', $val['playerBirthDate'])
+                ->where('nhl_id', $val['playerId'])
                 ->where('stats.date_id', $this->getDate())
                 ->update([
                     'stats.faceoff_wins' => $val['faceoffsWon'],
@@ -178,8 +171,7 @@ class StatsQueries
         foreach($data as $val) {
 
             PlayerBase::join('stats', 'player.id', '=', 'stats.player_id')
-                ->where('player.last_name', $val['playerLastName'])
-                ->where('player.birth_date', $val['playerBirthDate'])
+                ->where('nhl_id', $val['playerId'])
                 ->where('stats.date_id', $this->getDate())
                 ->update([
                     'stats.games_played' => $val['gamesPlayed'],

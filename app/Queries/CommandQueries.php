@@ -70,6 +70,21 @@ class CommandQueries
         }
     }
 
+    public function king()
+    {
+        return (int) DB::table('_king')->first()->franchise_id;
+    }
+
+    public function turkey()
+    {
+        return (int) DB::table('_turkey')->first()->franchise_id;
+    }
+
+    public function award($franchise, $award)
+    {
+        Franchise::where('id', $franchise)->increment($award);
+    }
+
     public function lineup()
     {
         Lineup::join('_player', 'lineup.player_id', '=', '_player.id')
@@ -124,7 +139,7 @@ class CommandQueries
 
     public function injury()
     {
-        PlayerBase::where('injury_status', 1)->update(['injury_status' => 0]);
+        PlayerBase::where('injury_status', '!=', 0)->update(['injury_status' => 0]);
 
         $json = file_get_contents('https://www.rotowire.com/hockey/tables/injury-report.php?team=ALL&pos=ALL');
 
@@ -133,9 +148,16 @@ class CommandQueries
         foreach($data as $val) {
 
             if ($val['injury'] != 'Suspension' && $val['injury'] != 'Contract Dispute') {
-                PlayerBase::where('id_rotowire', $val['ID'])
+                PlayerBase::where('rotowire_id', $val['ID'])
                     ->update([
                         'injury_status' => 1,
+                    ]);
+            }
+
+            if ($val['injury'] === 'Suspension' || $val['injury'] === 'Contract Dispute') {
+                PlayerBase::where('rotowire_id', $val['ID'])
+                    ->update([
+                        'injury_status' => 2,
                     ]);
             }
         };

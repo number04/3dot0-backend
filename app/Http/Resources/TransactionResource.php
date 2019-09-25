@@ -28,7 +28,7 @@ class TransactionResource extends JsonResource
                     'position' => $this->player['position'],
                     'positionSecondary' => $this->player['position_secondary'],
                     'isInjured' => (int) $this->player['injury_status'],
-                    'href' => route('player', ['date' => $this->date(), 'player' => $this->id])
+                    'href' => route('player', ['date' => $this->date(), 'player' => $this->player['id']])
                 ]
             ]
         ];

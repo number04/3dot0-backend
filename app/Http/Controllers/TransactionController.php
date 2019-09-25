@@ -30,6 +30,7 @@ class TransactionController extends Controller
             $transaction->add($request->add, $request->franchise);
             $transaction->lineup($request->add, $request->franchise, $request->date, 'b');
             $transaction->transaction($request->add, $request->franchise, 'add');
+            $transaction->increments($request->franchise, 'sign');
         }
 
         if ($request->drop) {
@@ -43,6 +44,7 @@ class TransactionController extends Controller
             $transaction->lineup($request->drop, 0, $request->date, 0);
             $transaction->waiver($request->drop);
             $transaction->transaction($request->drop, $request->franchise, 'drop');
+            $transaction->increments($request->franchise, 'release');
         }
 
         return response()->json([

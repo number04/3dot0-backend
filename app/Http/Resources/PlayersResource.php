@@ -29,7 +29,7 @@ class PlayersResource extends JsonResource
             'block' => (int) $this->block,
             'watching' => (int) $this->watching,
             'capHit' => (int) $this->cap_hit,
-            'draftContract' => $this->draft_contract,
+            'draft' => $this->draft,
             'isRookie' => (int) $this->rookie_status,
             'isInjured' => (int) $this->injury_status,
             'onWaivers' => $this->waivers,
