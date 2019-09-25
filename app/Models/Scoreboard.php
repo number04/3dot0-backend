@@ -35,6 +35,7 @@ class scoreboard extends Model
             DB::raw('SUM(goals) + SUM(assists) AS points_skater'),
             DB::raw('SUM(shots) AS shots'),
             DB::raw('SUM(hits) AS hits'),
+            DB::raw('SUM(blocked_shots) AS blocked_shots'),
             DB::raw('SUM(faceoff_wins) AS faceoff_wins'),
             DB::raw('SUM(wins) AS wins'),
             DB::raw('SUM(losses) AS losses'),

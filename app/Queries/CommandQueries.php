@@ -7,6 +7,7 @@ use App\Models\Config;
 use App\Models\Franchise;
 use App\Models\Matchup;
 use App\Models\Waiver;
+use App\Models\PlayerBase;
 
 use DB;
 
@@ -50,7 +51,7 @@ class CommandQueries
 
     public function getDate()
     {
-        return Config::where('key', 'date')->pluck('value')->first();
+        return (int) Config::where('key', 'date')->pluck('value')->first();
     }
 
     public function waiver()
@@ -119,5 +120,24 @@ class CommandQueries
                 $claim->decrementWeeklyAdds($request->waiver_id);
             }
         }
+    }
+
+    public function injury()
+    {
+        PlayerBase::where('injury_status', 1)->update(['injury_status' => 0]);
+
+        $json = file_get_contents('https://www.rotowire.com/hockey/tables/injury-report.php?team=ALL&pos=ALL');
+
+        $data = json_decode($json, true);
+
+        foreach($data as $val) {
+
+            if ($val['injury'] != 'Suspension' && $val['injury'] != 'Contract Dispute') {
+                PlayerBase::where('id_rotowire', $val['ID'])
+                    ->update([
+                        'injury_status' => 1,
+                    ]);
+            }
+        };
     }
 }
