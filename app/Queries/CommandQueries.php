@@ -22,6 +22,7 @@ class CommandQueries
     public function increments($franchise, $column)
     {
         Franchise::where('id', $franchise)->increment($column);
+    }
 
     public function timeConversion()
     {
