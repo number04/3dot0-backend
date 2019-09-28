@@ -8,6 +8,7 @@ use App\Models\Franchise;
 use App\Models\Matchup;
 use App\Models\Waiver;
 use App\Models\PlayerBase;
+use App\Models\Transaction;
 
 use DB;
 
@@ -27,6 +28,15 @@ class CommandQueries
     public function timeConversion()
     {
         return Config::where('key', 'conversion')->pluck('value')->first();
+    }
+
+    public function transaction($player, $franchise, $type)
+    {
+        Transaction::insert([
+            'franchise_id' => $franchise,
+            'player_id' => $player,
+            'type' => $type
+        ]);
     }
 
     public function pst()
@@ -131,17 +141,19 @@ class CommandQueries
                 $claim->drop($request->player_drop);
                 $claim->setLineup($request->player_drop, $claim->getDate(), 0, 0);
                 $claim->setWaiver($request->player_drop);
+                $this->transaction($request->player_drop, $request->franchise_id, 'drop');
             }
 
             $claim->add($request->player_id, $request->franchise_id);
-            $this->increments($request->franchise_id, 'sign');
             $claim->setLineup($request->player_id, $claim->getDate(), $request->franchise_id, 'b');
             $claim->setStatus('_claim', 'id', $request->id, 'success', 1);
             $claim->setStatus('claim', 'waiver_id', $request->waiver_id, 'process', 1);
             $claim->setStatus('waiver', 'id', $request->waiver_id, 'active', 0);
             $claim->waiverOrder($request->waiver_order, $request->franchise_id, $claim->countFranchise());
+            $this->transaction($request->player_id, $request->franchise_id, 'add');
+            $this->increments($request->franchise_id, 'sign');
 
-            if ($claim->getFail($request->waiver_id) && $request->matchup_id === $claim->getStartDate()) {
+            if ($claim->getFail($request->waiver_id) && $request->matchup_id === $this->getStartDate()) {
 
                 $claim->decrementWeeklyAdds($request->waiver_id);
             }

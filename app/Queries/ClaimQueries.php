@@ -20,6 +20,11 @@ class ClaimQueries
 {
     // getters
 
+    public function timeConversion()
+    {
+        return Config::where('key', 'conversion')->pluck('value')->first();
+    }
+
     public function getDate()
     {
         return Config::where('key', 'date')->pluck('value');
@@ -111,7 +116,10 @@ class ClaimQueries
 
     public function setWaiver($player)
     {
-        Waiver::insert(['player_id' => $player]);
+        Waiver::insert([
+            'player_id' => $player,
+            'created_at' => gmdate("Y-m-d H:i:s", strtotime($this->timeConversion()." hours"))
+        ]);
     }
 
     public function setStatus($table, $column, $id, $status, $value)
