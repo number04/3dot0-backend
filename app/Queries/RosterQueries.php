@@ -19,13 +19,13 @@ class RosterQueries
         if ($watch) {
             return Player::where('id', $player)
                 ->update(['watch' => DB::raw(
-                    'JSON_INSERT(watch, "$.'. $franchise .'", "'. $franchise .'")'
+                    "JSON_INSERT(watch, '$.". $franchise ."', '". $franchise ."')"
                 )]);
         }
 
         return Player::where('id', $player)
             ->update(['watch' => DB::raw(
-                'JSON_REMOVE(watch, "$.'. $franchise .'")'
+                "JSON_REMOVE(watch, '$.". $franchise ."')"
             )]);
     }
 
