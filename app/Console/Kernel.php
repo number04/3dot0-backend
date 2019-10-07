@@ -39,7 +39,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('theleague:pst')->cron('30 11 3 11 *'); // 03:30 03 November 2019
         $schedule->command('theleague:pdt')->cron('30 10 8 3 *'); // 03:30 08 March 2020
 
-        $schedule->command('theleague:adds')->mondays()->at('08:10'); // 110am PDT | 1210am PST
+       /* $schedule->command('theleague:adds')->mondays()->at('08:10'); */// 110am PDT | 1210am PST
         $schedule->command('theleague:award')->mondays()->at('08:10'); // 110am PDT | 1210am PST
         $schedule->command('theleague:standing')->mondays()->at('08:10'); // 110am PDT | 1210am PST
 
