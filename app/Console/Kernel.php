@@ -47,10 +47,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('theleague:stats')->everyFiveMinutes(); // 1am - 8am PDT | 12am - 7am PST
         $schedule->command('theleague:injury')->everyFiveMinutes(); // 1am - 8am PDT | 12am - 7am PST
 
-        $schedule->command('theleague:date')->dailyAt('8:00'); // 1am PDT | 12am PST
-        $schedule->command('theleague:matchup')->dailyAt('8:00'); // 1am PDT | 12am PST
-        $schedule->command('theleague:claim')->dailyAt('8:00'); // 1am PDT | 12am PST
-        $schedule->command('theleague:waiver')->dailyAt('8:00'); // 1am PDT | 12am PST
+        $schedule->command('theleague:date')->dailyAt('08:00'); // 1am PDT | 12am PST
+        $schedule->command('theleague:matchup')->dailyAt('08:00'); // 1am PDT | 12am PST
+        $schedule->command('theleague:claim')->dailyAt('08:00'); // 1am PDT | 12am PST
+        $schedule->command('theleague:waiver')->dailyAt('08:00'); // 1am PDT | 12am PST
     }
 
     /**

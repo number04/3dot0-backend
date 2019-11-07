@@ -41,12 +41,12 @@ class CommandQueries
 
     public function pst()
     {
-        Config::where('key', 'conversion')->update(['value' => '-8:00']);
+        Config::where('key', 'conversion')->update(['value' => '-8']);
     }
 
     public function pdt()
     {
-        Config::where('key', 'conversion')->update(['value' => '-7:00']);
+        Config::where('key', 'conversion')->update(['value' => '-7']);
     }
 
     public function date()

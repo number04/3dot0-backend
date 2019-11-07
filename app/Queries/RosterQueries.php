@@ -3,7 +3,7 @@
 namespace App\Queries;
 
 use DB;
-use App\Models\Player;
+use App\Models\PlayerBase;
 use App\Models\Lineup;
 use App\Models\Franchise;
 use App\Models\Need;
@@ -17,13 +17,13 @@ class RosterQueries
     public function watch($player, $franchise, $watch)
     {
         if ($watch) {
-            return Player::where('id', $player)
+            return PlayerBase::where('id', $player)
                 ->update(['watch' => DB::raw(
                     'JSON_INSERT(watch, "$.'. $franchise .'", "'. $franchise .'")'
                 )]);
         }
 
-        return Player::where('id', $player)
+        return PlayerBase::where('id', $player)
             ->update(['watch' => DB::raw(
                 'JSON_REMOVE(watch, "$.'. $franchise .'")'
             )]);
