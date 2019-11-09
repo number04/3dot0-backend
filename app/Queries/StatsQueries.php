@@ -106,7 +106,7 @@ class StatsQueries
     public function getDaily()
     {
         // teams
-        $json = file_get_contents('https://api.nhle.com/stats/rest/team?isAggregate=false&reportType=basic&isGame=true&reportName=teamsummary&cayenneExp=leagueId=133%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameDate%3C=%22'.$this->getYMD().'%2023:59:59%22%20and%20gameTypeId=2');
+        $json = file_get_contents('https://api.nhle.com/stats/rest/team?isAggregate=false&reportType=basic&isGame=true&reportName=teamsummary&cayenneExp=leagueId=133%20and%20gameDate%3E=%222019-10-08%22%20and%20gameDate%3C=%222019-10-08%2023:59:59%22%20and%20gameTypeId=2');
 
         $array = json_decode($json, true);
         $data = $array["data"];
@@ -115,7 +115,7 @@ class StatsQueries
 
             PlayerBase::join('stats', 'player.id', '=', 'stats.player_id')
                 ->where('nhl_id', $val['teamId'])
-                ->where('stats.date_id', $this->getDate())
+                ->where('stats.date_id', '8')
                 ->update([
                     'stats.games_played' => $val['gamesPlayed'],
                     'stats.wins' => $val['wins'],
@@ -145,7 +145,7 @@ class StatsQueries
                 ]);
         };
 
-        $json = file_get_contents('https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=basic&isGame=true&reportName=realtime&cayenneExp=leagueId=133%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameDate%3C=%22'.$this->getYMD().'%2023:59:59%22%20and%20gameTypeId=2');
+        $json = file_get_contents('https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=basic&isGame=true&reportName=realtime&cayenneExp=leagueId=133%20and%20gameDate%3E=%222019-10-08%22%20and%20gameDate%3C=%222019-10-08%2023:59:59%22%20and%20gameTypeId=2');
 
         $array = json_decode($json, true);
         $data = $array["data"];
@@ -154,7 +154,7 @@ class StatsQueries
 
             PlayerBase::join('stats', 'player.id', '=', 'stats.player_id')
                 ->where('nhl_id', $val['playerId'])
-                ->where('stats.date_id', $this->getDate())
+                ->where('stats.date_id', '8')
                 ->update([
                     'stats.faceoff_wins' => $val['faceoffsWon'],
                     'stats.hits' => $val['hits'],
@@ -163,7 +163,7 @@ class StatsQueries
         };
 
         // goalies
-        $json = file_get_contents('https://api.nhle.com/stats/rest/goalies?isAggregate=false&reportType=basic&isGame=true&reportName=goaliesummary&cayenneExp=leagueId=133%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameDate%3C=%22'.$this->getYMD().'%2023:59:59%22%20and%20gameTypeId=2');
+        $json = file_get_contents('https://api.nhle.com/stats/rest/goalies?isAggregate=false&reportType=basic&isGame=true&reportName=goaliesummary&cayenneExp=leagueId=133%20and%20gameDate%3E=%222019-10-08%22%20and%20gameDate%3C=%222019-10-08%2023:59:59%22%20and%20gameTypeId=2');
 
         $array = json_decode($json, true);
         $data = $array["data"];
@@ -172,7 +172,7 @@ class StatsQueries
 
             PlayerBase::join('stats', 'player.id', '=', 'stats.player_id')
                 ->where('nhl_id', $val['playerId'])
-                ->where('stats.date_id', $this->getDate())
+                ->where('stats.date_id', '8')
                 ->update([
                     'stats.games_played' => $val['gamesPlayed'],
                     'stats.wins' => $val['wins'],
