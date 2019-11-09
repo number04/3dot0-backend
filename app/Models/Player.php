@@ -23,7 +23,7 @@ class Player extends Model
 
     public function stat()
     {
-        return $this->hasOne(Stat::class);
+        return $this->hasOne(StatBase::class);
     }
 
     public function lineup()

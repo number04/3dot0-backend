@@ -4,59 +4,53 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Stat extends Model
+use DB;
+
+class stat extends Model
 {
-    protected $table = 'stats';
+    protected $table = '_stat';
 
     public $timestamps = false;
 
-    protected $appends = [
-        'points_skater',
-        'points_team',
-        'goals_against_average',
-        'save_percentage'
-    ];
-
-    public function player()
+    public function franchise()
     {
-        return $this->belongsTo(Player::class);
-    }
-
-    public function date()
-    {
-        return $this->belongsTo(Date::class);
+        return $this->belongsTo(Franchise::class);
     }
 
     public function scopeDate($query, $date)
     {
-        $query->where('date_id', $date);
+        return $query->where('date_id', $date);
     }
 
-    public function getGoalsAgainstAverageAttribute()
+    public function scopeMatchup($query, $matchup)
     {
-        if ($this->time_on_ice != 0) {
-            return number_format(round(($this->goals_against * 3600) / $this->time_on_ice, 2), 2);
-        }
-
-        return 0;
+        $query->whereBetween('date_id', [
+            Matchup::select('start_date')->where('id', $matchup)->first()->start_date,
+            Matchup::select('end_date')->where('id', $matchup)->first()->end_date
+        ]);
     }
 
-    public function getSavePercentageAttribute()
+    public function scopeStats($query)
     {
-        if ($this->saves != 0) {
-            return ltrim(number_format(round($this->saves / ($this->saves + $this->goals_against), 3), 3), '0');
-        }
-
-        return 0;
-    }
-
-    public function getPointsSkaterAttribute()
-    {
-        return $this->goals + $this->assists;
-    }
-
-    public function getPointsTeamAttribute()
-    {
-        return $this->wins * 2 + $this->overtime_losses;
+        $query->addSelect(
+            '*',
+            DB::raw('SUM(games_played) AS games_played'),
+            DB::raw('SUM(goals) AS goals'),
+            DB::raw('SUM(assists) AS assists'),
+            DB::raw('SUM(goals) + SUM(assists) AS points_skater'),
+            DB::raw('SUM(shots) AS shots'),
+            DB::raw('SUM(hits) AS hits'),
+            DB::raw('SUM(blocked_shots) AS blocked_shots'),
+            DB::raw('SUM(faceoff_wins) AS faceoff_wins'),
+            DB::raw('SUM(wins) AS wins'),
+            DB::raw('SUM(losses) AS losses'),
+            DB::raw('SUM(overtime_losses) AS overtime_losses'),
+            DB::raw('SUM(saves) AS saves'),
+            DB::raw('IFNULL(ROUND((SUM(goals_against)* 3600) / SUM(time_on_ice), 2), 0) AS goals_against_average'),
+            DB::raw('IFNULL(ROUND(SUM(saves) / (SUM(saves) + SUM(goals_against)), 3), 0) AS save_percentage'),
+            DB::raw('SUM(goals_for) AS goals_for'),
+            DB::raw('SUM(goals_against) AS goals_against'),
+            DB::raw('SUM(wins) * 2 + SUM(overtime_losses) AS points_team')
+        )->whereIn('lineup', ['c','l','r','d','s','g','t']);
     }
 }

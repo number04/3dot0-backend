@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
         StatsCommand::class,
         InjuryCommand::class,
         AwardCommand::class,
-        StandingCommand::class
+        StandingCommand::class,
+        ScoreboardCommand::class
     ];
 
     /**
@@ -44,7 +45,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('theleague:standing')->mondays()->at('08:10'); // 110am PDT | 1210am PST
 
         $schedule->command('theleague:lineup')->everyMinute(); // 1am - 8am PDT | 12am - 7am PST
+
         $schedule->command('theleague:stats')->everyFiveMinutes(); // 1am - 8am PDT | 12am - 7am PST
+        $schedule->command('theleague:scoreboard')->everyFiveMinutes(); // 1am - 8am PDT | 12am - 7am PST
         $schedule->command('theleague:injury')->everyFiveMinutes(); // 1am - 8am PDT | 12am - 7am PST
 
         $schedule->command('theleague:date')->dailyAt('08:00'); // 1am PDT | 12am PST

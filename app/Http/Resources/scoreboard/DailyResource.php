@@ -17,7 +17,7 @@ class DailyResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'playerId' => $this->id,
+            'playerId' => $this->player_id,
             'playerName' => $this->player_name,
             'playerNameShort' => $this->player_name_short,
             'franchiseId' => (int) $this->franchise_id,
@@ -27,9 +27,9 @@ class DailyResource extends JsonResource
             'isInjured' => $this->injury_status,
             'games' => [
                 'today' => [
-                    'date' => $this->schedule->date->date,
-                    'opponent' => $this->schedule->opponent,
-                    'lineup' => $this->lineup->status,
+                    'date' => $this->date,
+                    'opponent' => $this->opponent,
+                    'lineup' => $this->lineup,
                     'stats' => $this->stats($this->position)
                 ]
             ],
@@ -42,41 +42,59 @@ class DailyResource extends JsonResource
         return DB::table('config')->where('key', '=', 'date')->first()->value;
     }
 
+    public function savePercentage()
+    {
+        if ($this->saves != 0) {
+            return ltrim(number_format(round($this->saves / ($this->saves + $this->goals_against), 3), 3), '0');
+        }
+
+        return '.000';
+    }
+
+    public function goalsAgainstAverage()
+    {
+        if ($this->time_on_ice != 0) {
+            return number_format(round(($this->goals_against * 3600) / $this->time_on_ice, 2), 2);
+        }
+
+        return '0.00';
+    }
+
     private function stats($position)
     {
         if ($position ===  'g') {
             return [
-                'games_played' => $this->stat->games_played,
-                'wins' => $this->stat->wins,
-                'losses' => $this->stat->losses,
-                'overtime_losses' => $this->stat->overtime_losses,
-                'saves' => $this->stat->saves,
-                'save_percentage' => $this->stat->save_percentage,
-                'goals_against_average' => $this->stat->goals_against_average
+                'games_played' => $this->games_played,
+                'wins' => $this->wins,
+                'losses' => $this->losses,
+                'overtime_losses' => $this->overtime_losses,
+                'saves' => $this->saves,
+                'save_percentage' => $this->savePercentage(),
+                'goals_against_average' => $this->goalsAgainstAverage()
             ];
         }
 
         if ($position ===  't') {
             return [
-                'games_played' => $this->stat->games_played,
-                'wins' => $this->stat->wins,
-                'losses' => $this->stat->losses,
-                'overtime_losses' => $this->stat->overtime_losses,
-                'points_team' => $this->stat->wins * 2 + $this->stat->overtime_losses,
-                'goals_for' => $this->stat->goals_for,
-                'goals_against' => $this->stat->goals_against
+                'games_played' => $this->games_played,
+                'wins' => $this->wins,
+                'losses' => $this->losses,
+                'overtime_losses' => $this->overtime_losses,
+                'points_team' => $this->wins * 2 + $this->overtime_losses,
+                'goals_for' => $this->goals_for,
+                'goals_against' => $this->goals_against
             ];
         }
 
         return [
-            'games_played' => $this->stat->games_played,
-            'goals' => $this->stat->goals,
-            'assists' => $this->stat->assists,
-            'points_skater' => $this->stat->goals + $this->stat->assists,
-            'hits' => $this->stat->hits,
-            'shots' => $this->stat->shots,
-            'blocked_shots' => $this->stat->blocked_shots,
-            'faceoff_wins' => $this->stat->faceoff_wins
+            'games_played' => $this->games_played,
+            'goals' => $this->goals,
+            'assists' => $this->assists,
+            'points_skater' => $this->goals + $this->assists,
+            'hits' => $this->hits,
+            'shots' => $this->shots,
+            'blocked_shots' => $this->blocked_shots,
+            'faceoff_wins' => $this->faceoff_wins
         ];
     }
 }

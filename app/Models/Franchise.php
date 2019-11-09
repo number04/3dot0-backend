@@ -26,6 +26,16 @@ class Franchise extends Model
         return $this->hasMany(Scoreboard::class);
     }
 
+    public function matchup()
+    {
+        return $this->hasMany(stat::class);
+    }
+
+    public function daily()
+    {
+        return $this->hasMany(stat::class);
+    }
+
     public function standing()
     {
         return $this->hasMany(Standing::class);

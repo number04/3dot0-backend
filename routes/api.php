@@ -20,7 +20,7 @@ Route::group(['middleware' => 'auth:api', ], function () {
     Route::get('config', 'endpoints\ConfigController@index');
     Route::get('claim', 'endpoints\ClaimController@claim');
     Route::get('transaction', 'endpoints\TransactionController@transaction');
-    Route::get('rank:{matchup}', 'endpoints\RankController@rank');
+    Route::get('scoreboard:{matchup}', 'endpoints\ScoreboardController@scoreboard');
     Route::get('standing:{matchup}', 'endpoints\StandingController@standing');
 
     Route::patch('watch', 'RosterController@watch');
@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth:api', ], function () {
         Route::get('player/{player}', 'endpoints\PlayerController@player')->name('player');
 
         Route::get('franchises', 'endpoints\FranchiseController@franchises');
-        Route::get('scoreboard:{matchup}', 'endpoints\ScoreboardController@scoreboard');
+        Route::get('stat:{matchup}', 'endpoints\StatController@stat');
     });
 
 });

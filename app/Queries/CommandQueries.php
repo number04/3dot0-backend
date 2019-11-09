@@ -190,4 +190,9 @@ class CommandQueries
     {
         DB::statement('call standing('.$this->getMatchup().'-1)');
     }
+
+    public function scoreboard()
+    {
+        DB::statement('call scoreboard('.$this->getMatchup().')');
+    }
 }
