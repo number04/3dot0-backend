@@ -127,7 +127,7 @@ class StatsQueries
         };
 
         // skaters
-        $json = file_get_contents('https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=basic&isGame=true&reportName=skatersummary&cayenneExp=leagueId=133%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameDate%3C=%22'.$this->getYMD().'%2023:59:59%22%20and%20gameTypeId=2');
+        $json = file_get_contents('https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=basic&isGame=true&reportName=skatersummary&cayenneExp=leagueId=133%20and%20gameDate%3E=%222019-10-08%22%20and%20gameDate%3C=%222019-10-08%2023:59:59%22%20and%20gameTypeId=2');
 
         $array = json_decode($json, true);
         $data = $array["data"];
