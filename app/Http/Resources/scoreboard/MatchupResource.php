@@ -16,7 +16,7 @@ class MatchupResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'playerId' => $this->id,
+            'playerId' => $this->player_id,
             'playerName' => $this->player_name,
             'playerNameShort' => $this->player_name_short,
             'franchiseId' => (int) $this->franchise_id,
@@ -25,7 +25,7 @@ class MatchupResource extends JsonResource
             'positionSecondary' => $this->position_secondary,
             'isInjured' => $this->injury_status,
             'stats' => $this->stats($this->position),
-            'href' => route('player', ['date' => $this->date(), 'player' => $this->id])
+            'href' => route('player', ['date' => $this->date(), 'player' => $this->player_id])
         ];
     }
 

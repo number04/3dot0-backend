@@ -33,7 +33,7 @@ class DailyResource extends JsonResource
                     'stats' => $this->stats($this->position)
                 ]
             ],
-            'href' => route('player', ['date' => $this->date(), 'player' => $this->id])
+            'href' => route('player', ['date' => $this->date(), 'player' => $this->player_id])
         ];
     }
 

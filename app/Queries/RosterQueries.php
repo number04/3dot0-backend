@@ -41,7 +41,7 @@ class RosterQueries
 
     public function block($player, $block)
     {
-        return Player::where('id', '=', $player)
+        return PlayerBase::where('id', '=', $player)
             ->update([
                 'block' => $block
             ]);
