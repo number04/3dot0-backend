@@ -136,7 +136,7 @@ class StatsQueries
 
             PlayerBase::join('stats', 'player.id', '=', 'stats.player_id')
                 ->where('nhl_id', $val['playerId'])
-                ->where('stats.date_id', $this->getDate())
+                ->where('stats.date_id', '8')
                 ->update([
                     'stats.games_played' => $val['gamesPlayed'],
                     'stats.goals' => $val['goals'],
