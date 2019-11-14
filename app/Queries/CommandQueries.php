@@ -84,10 +84,7 @@ class CommandQueries
 
     public function matchup()
     {
-        if ($this->getDate() != 1 && in_array($this->getDate(), $this->getStartDate())) {
-
-            Config::where('key', 'matchup')->increment('value');
-        }
+        Config::where('key', 'matchup')->increment('value');
     }
 
     public function king()

@@ -92,6 +92,7 @@ class StatsQueries
 
             PlayerBase::where('nhl_id', $val['playerId'])
                 ->update([
+                    'nhl' => $val['playerTeamsPlayedFor'],
                     'games_played' => $val['gamesPlayed'],
                     'wins' => $val['wins'],
                     'losses' => $val['losses'],

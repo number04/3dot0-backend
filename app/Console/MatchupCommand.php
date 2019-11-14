@@ -19,7 +19,7 @@ class MatchupCommand extends Command
      *
      * @var string
      */
-    protected $description = 'increment matchup';
+    protected $description = 'run processes at end of matchup';
 
     /**
      * Create a new command instance.
@@ -38,6 +38,13 @@ class MatchupCommand extends Command
      */
     public function handle(CommandQueries $command)
     {
-        $command->matchup();
+        if ($command->getDate() != 1 && in_array($command->getDate(), $command->getStartDate())) {
+
+            $command->matchup(); // increment matchup_id
+            $command->standing(); // update standing table
+            $command->adds(); // reset weekly_adds
+            $command->award($command->king(), 'king'); // set matchup king
+            $command->award($command->turkey(), 'turkey'); // set matchup turkey
+        }
     }
 }
