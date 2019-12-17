@@ -139,7 +139,7 @@ class StatsQueries
         // };
 
         // skaters
-        $json = file_get_contents('https://api.nhle.com/stats/rest/en/skater/summary?isAggregate=false&isGame=true&factCayenneExp=gamesPlayed%3E=1&cayenneExp=gameDate%3C=%22'.$this->getYMD().'%2023%3A59%3A59%22%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameTypeId=2');
+        $json = file_get_contents('https://api.nhle.com/stats/rest/en/skater/summary?isAggregate=false&isGame=true&sort=%5B%7B%22property%22:%22teamAbbrev%22,%22direction%22:%22ASC%22%7D%5D&start=0&limit=100&factCayenneExp=gamesPlayed%3E=1&cayenneExp=gameDate%3C=%22'.$this->getYMD().'%2023%3A59%3A59%22%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameTypeId=2');
 
         $array = json_decode($json, true);
         $data = $array["data"];
@@ -157,7 +157,7 @@ class StatsQueries
                 ]);
         };
 
-        $json = file_get_contents('https://api.nhle.com/stats/rest/en/skater/realtime?isAggregate=false&isGame=true&factCayenneExp=gamesPlayed%3E=1&cayenneExp=gameDate%3C=%22'.$this->getYMD().'%2023%3A59%3A59%22%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameTypeId=2');
+        $json = file_get_contents('https://api.nhle.com/stats/rest/en/skater/realtime??isAggregate=false&isGame=true&sort=%5B%7B%22property%22:%22teamAbbrev%22,%22direction%22:%22ASC%22%7D%5D&start=0&limit=100&factCayenneExp=gamesPlayed%3E=1&cayenneExp=gameDate%3C=%22'.$this->getYMD().'%2023%3A59%3A59%22%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameTypeId=2');
 
         $array = json_decode($json, true);
         $data = $array["data"];
@@ -173,7 +173,7 @@ class StatsQueries
                 ]);
         };
 
-        $json = file_get_contents('https://api.nhle.com/stats/rest/en/skater/faceoffwins?isAggregate=false&isGame=true&factCayenneExp=gamesPlayed%3E=1&cayenneExp=gameDate%3C=%22'.$this->getYMD().'%2023%3A59%3A59%22%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameTypeId=2');
+        $json = file_get_contents('https://api.nhle.com/stats/rest/en/skater/faceoffwins??isAggregate=false&isGame=true&sort=%5B%7B%22property%22:%22teamAbbrev%22,%22direction%22:%22ASC%22%7D%5D&start=0&limit=100&factCayenneExp=gamesPlayed%3E=1&cayenneExp=gameDate%3C=%22'.$this->getYMD().'%2023%3A59%3A59%22%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameTypeId=2');
 
         $array = json_decode($json, true);
         $data = $array["data"];
