@@ -34,7 +34,7 @@ class StatsQueries
     public function getYear()
     {
         // teams
-        $json = file_get_contents('https://api.nhle.com/stats/rest/team?isAggregate=false&reportType=basic&isGame=false&reportName=teamsummary&cayenneExp=gameTypeId=2%20and%20seasonId%3E='.$this->getSeason().'%20and%20seasonId%3C='.$this->getSeason());
+        $json = file_get_contents('https://api.nhle.com/stats/rest/en/team/summary?isAggregate=false&reportType=basic&isGame=false&reportName=teamsummary&cayenneExp=gameTypeId=2%20and%20seasonId%3E='.$this->getSeason().'%20and%20seasonId%3C='.$this->getSeason());
 
         $array = json_decode($json, true);
         $data = $array["data"];
@@ -53,7 +53,7 @@ class StatsQueries
         };
 
         // skaters
-        $json = file_get_contents('https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=basic&isGame=false&reportName=skatersummary&cayenneExp=gameTypeId=2%20and%20seasonId%3E='.$this->getSeason().'%20and%20seasonId%3C='.$this->getSeason());
+        $json = file_get_contents('https://api.nhle.com/stats/rest/en/skater/summary?isAggregate=false&reportType=basic&isGame=false&reportName=skatersummary&cayenneExp=gameTypeId=2%20and%20seasonId%3E='.$this->getSeason().'%20and%20seasonId%3C='.$this->getSeason());
         $array = json_decode($json, true);
         $data = $array["data"];
 
@@ -69,7 +69,7 @@ class StatsQueries
                 ]);
         };
 
-        $json = file_get_contents('https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=basic&isGame=false&reportName=realtime&cayenneExp=gameTypeId=2%20and%20seasonId%3E='.$this->getSeason().'%20and%20seasonId%3C='.$this->getSeason());
+        $json = file_get_contents('https://api.nhle.com/stats/rest/en/skater/realtime?isAggregate=false&reportType=basic&isGame=false&reportName=realtime&cayenneExp=gameTypeId=2%20and%20seasonId%3E='.$this->getSeason().'%20and%20seasonId%3C='.$this->getSeason());
         $array = json_decode($json, true);
         $data = $array["data"];
 
@@ -77,14 +77,25 @@ class StatsQueries
 
             PlayerBase::where('nhl_id', $val['playerId'])
                 ->update([
-                    'faceoff_wins' => $val['faceoffsWon'],
                     'hits' => $val['hits'],
                     'blocked_shots' => $val['blockedShots']
                 ]);
         };
 
+        $json = file_get_contents('https://api.nhle.com/stats/rest/en/skater/faceoffwins?isAggregate=false&reportType=basic&isGame=false&reportName=realtime&cayenneExp=gameTypeId=2%20and%20seasonId%3E='.$this->getSeason().'%20and%20seasonId%3C='.$this->getSeason());
+        $array = json_decode($json, true);
+        $data = $array["data"];
+
+        foreach($data as $val) {
+
+            PlayerBase::where('nhl_id', $val['playerId'])
+                ->update([
+                    'faceoff_wins' => $val['totalFaceoffWins']
+                ]);
+        };
+
         // goalies
-        $json = file_get_contents('https://api.nhle.com/stats/rest/goalies?isAggregate=false&reportType=goalie_basic&isGame=false&reportName=goaliesummary&cayenneExp=gameTypeId=2%20and%20seasonId%3E='.$this->getSeason().'%20and%20seasonId%3C='.$this->getSeason());
+        $json = file_get_contents('https://api.nhle.com/stats/rest/en/goalie/summary?isAggregate=false&reportType=goalie_basic&isGame=false&reportName=goaliesummary&cayenneExp=gameTypeId=2%20and%20seasonId%3E='.$this->getSeason().'%20and%20seasonId%3C='.$this->getSeason());
         $array = json_decode($json, true);
         $data = $array["data"];
 
@@ -107,7 +118,7 @@ class StatsQueries
     public function getDaily()
     {
         // teams
-        $json = file_get_contents('https://api.nhle.com/stats/rest/team?isAggregate=false&reportType=basic&isGame=true&reportName=teamsummary&cayenneExp=leagueId=133%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameDate%3C=%22'.$this->getYMD().'%2023:59:59%22%20and%20gameTypeId=2');
+        $json = file_get_contents('https://api.nhle.com/stats/rest/en/team/summary?isAggregate=false&reportType=basic&isGame=true&reportName=teamsummary&cayenneExp=leagueId=133%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameDate%3C=%22'.$this->getYMD().'%2023:59:59%22%20and%20gameTypeId=2');
 
         $array = json_decode($json, true);
         $data = $array["data"];
@@ -128,7 +139,7 @@ class StatsQueries
         };
 
         // skaters
-        $json = file_get_contents('https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=basic&isGame=true&reportName=skatersummary&cayenneExp=leagueId=133%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameDate%3C=%22'.$this->getYMD().'%2023:59:59%22%20and%20gameTypeId=2');
+        $json = file_get_contents('https://api.nhle.com/stats/rest/en/skater/summary?isAggregate=false&reportType=basic&isGame=true&reportName=skatersummary&cayenneExp=leagueId=133%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameDate%3C=%22'.$this->getYMD().'%2023:59:59%22%20and%20gameTypeId=2');
 
         $array = json_decode($json, true);
         $data = $array["data"];
@@ -146,7 +157,7 @@ class StatsQueries
                 ]);
         };
 
-        $json = file_get_contents('https://api.nhle.com/stats/rest/skaters?isAggregate=false&reportType=basic&isGame=true&reportName=realtime&cayenneExp=leagueId=133%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameDate%3C=%22'.$this->getYMD().'%2023:59:59%22%20and%20gameTypeId=2');
+        $json = file_get_contents('https://api.nhle.com/stats/rest/en/skater/realtime?isAggregate=false&reportType=basic&isGame=true&reportName=realtime&cayenneExp=leagueId=133%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameDate%3C=%22'.$this->getYMD().'%2023:59:59%22%20and%20gameTypeId=2');
 
         $array = json_decode($json, true);
         $data = $array["data"];
@@ -163,8 +174,23 @@ class StatsQueries
                 ]);
         };
 
+        $json = file_get_contents('https://api.nhle.com/stats/rest/en/skater/faceoffwins?isAggregate=false&reportType=basic&isGame=true&reportName=realtime&cayenneExp=leagueId=133%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameDate%3C=%22'.$this->getYMD().'%2023:59:59%22%20and%20gameTypeId=2');
+
+        $array = json_decode($json, true);
+        $data = $array["data"];
+
+        foreach($data as $val) {
+
+            PlayerBase::join('stats', 'player.id', '=', 'stats.player_id')
+                ->where('nhl_id', $val['playerId'])
+                ->where('stats.date_id', $this->getDate())
+                ->update([
+                    'stats.faceoff_wins' => $val['totalFaceoffsWins']
+                ]);
+        };
+
         // goalies
-        $json = file_get_contents('https://api.nhle.com/stats/rest/goalies?isAggregate=false&reportType=basic&isGame=true&reportName=goaliesummary&cayenneExp=leagueId=133%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameDate%3C=%22'.$this->getYMD().'%2023:59:59%22%20and%20gameTypeId=2');
+        $json = file_get_contents('https://api.nhle.com/stats/rest/en/goalie/summary?isAggregate=false&reportType=basic&isGame=true&reportName=goaliesummary&cayenneExp=leagueId=133%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameDate%3C=%22'.$this->getYMD().'%2023:59:59%22%20and%20gameTypeId=2');
 
         $array = json_decode($json, true);
         $data = $array["data"];
