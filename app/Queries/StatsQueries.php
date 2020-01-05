@@ -117,26 +117,29 @@ class StatsQueries
 
     public function getDaily()
     {
+
+
+
         // teams
-        // $json = file_get_contents('https://api.nhle.com/stats/rest/en/team/summary?isAggregate=true&isGame=true&factCayenneExp=gamesPlayed>=1&cayenneExp=gameDate<="'.$this->getYMD().'%2023%3A59%3A59"%20and%20gameDate>="'.$this->getYMD().'"%20and%20gameTypeId=2');
-        //
-        // $array = json_decode($json, true);
-        // $data = $array["data"];
-        //
-        // foreach($data as $val) {
-        //
-        //     PlayerBase::join('stats', 'player.id', '=', 'stats.player_id')
-        //         ->where('nhl_id', $val['teamId'])
-        //         ->where('stats.date_id', $this->getDate())
-        //         ->update([
-        //             'stats.games_played' => $val['gamesPlayed'],
-        //             'stats.wins' => $val['wins'],
-        //             'stats.losses' => $val['losses'],
-        //             'stats.overtime_losses' => $val['otLosses'],
-        //             'stats.goals_for' => $val['goalsFor'],
-        //             'stats.goals_against' => $val['goalsAgainst']
-        //         ]);
-        // };
+        $json = file_get_contents('https://api.nhle.com/stats/rest/en/team/summary?isAggregate=true&isGame=true&limit=50&factCayenneExp=gamesPlayed%3E=1&cayenneExp=gameDate%3C=%22'.$this->getYMD().'%2023%3A59%3A59%22%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameTypeId=2');
+
+        $array = json_decode($json, true);
+        $data = $array["data"];
+
+        foreach($data as $val) {
+
+            PlayerBase::join('stats', 'player.id', '=', 'stats.player_id')
+                ->where('nhl_id', $val['franchsieId'])
+                ->where('stats.date_id', $this->getDate())
+                ->update([
+                    'stats.games_played' => $val['gamesPlayed'],
+                    'stats.wins' => $val['wins'],
+                    'stats.losses' => $val['losses'],
+                    'stats.overtime_losses' => $val['otLosses'],
+                    'stats.goals_for' => $val['goalsFor'],
+                    'stats.goals_against' => $val['goalsAgainst']
+                ]);
+        };
 
         // skaters
         $json = file_get_contents('https://api.nhle.com/stats/rest/en/skater/summary?isAggregate=false&isGame=true&limit=0&cayenneExp=gameDate%3C=%22'.$this->getYMD().'%2023%3A59%3A59%22%20and%20gameDate%3E=%22'.$this->getYMD().'%22%20and%20gameTypeId=2');
