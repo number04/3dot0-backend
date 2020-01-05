@@ -129,7 +129,7 @@ class StatsQueries
         foreach($data as $val) {
 
             PlayerBase::join('stats', 'player.id', '=', 'stats.player_id')
-                ->where('nhl_id', $val['franchsieId'])
+                ->where('nhl_id', $val['franchiseId'])
                 ->where('stats.date_id', $this->getDate())
                 ->update([
                     'stats.games_played' => $val['gamesPlayed'],
