@@ -41,7 +41,7 @@ class StatsQueries
 
         foreach($data as $val) {
 
-            PlayerBase::where('nhl_id', $val['teamId'])
+            PlayerBase::where('rotowire_id', $val['teamId'])
                 ->update([
                     'games_played' => $val['gamesPlayed'],
                     'wins' => $val['wins'],
